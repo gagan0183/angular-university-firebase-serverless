@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from "../model/course";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -11,16 +11,11 @@ import {map} from "rxjs/operators";
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-
-    constructor() {
-
+    constructor(private db: AngularFirestore) {
     }
 
     ngOnInit() {
-
-
-
+      this.db.collection('courses').valueChanges()
+              .subscribe(val => console.log(val));
     }
-
 }
