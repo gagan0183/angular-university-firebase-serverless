@@ -30,6 +30,7 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import {AngularFireModule} from '@angular/fire';
+import { CoursesService} from './services/courses.service'
 
 import { environment } from '../environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
@@ -76,7 +77,8 @@ import { LoginComponent } from './login/login.component';
         AngularFireStorageModule
     ],
     providers: [
-        CourseResolver
+        CourseResolver,
+        CoursesService
     ],
     bootstrap: [AppComponent],
     entryComponents: [CourseDialogComponent]
