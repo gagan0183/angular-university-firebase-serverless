@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Course } from '../model/course';
+
 
 @Component({
   selector: 'about',
@@ -9,11 +8,9 @@ import { Course } from '../model/course';
 })
 export class AboutComponent implements OnInit {
 
-  constructor(private db: AngularFirestore) { }
+  constructor() { }
 
   ngOnInit() {
-    this.db.collection('courses').stateChanges().subscribe((snaps) => {
-        console.log(snaps);
-    })
+    
   }
 }
