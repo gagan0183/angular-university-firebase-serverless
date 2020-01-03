@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from "../model/course";
 import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import { AngularFirestore } from '@angular/fire/firestore';
+import { CoursesService } from '../services/courses.service';
 import { Course } from '../model/course';
+import {map} from "rxjs/operators";
 
 
 @Component({
@@ -16,19 +15,11 @@ export class HomeComponent implements OnInit {
     beginnerCourses$: Observable<Course[]>;
     advancedCourses$: Observable<Course[]>;
 
-    constructor(private db: AngularFirestore) {
+    constructor(private coursesService: CoursesService) {
     }
 
     ngOnInit() {
-      this.course$ = this.db.collection('courses').snapshotChanges().pipe(map(snaps => {
-        return snaps.map(snap => {
-          return<Course> {
-            id: snap.payload.doc.id,
-            ...snap.payload.doc.data()
-          };
-        });
-      }));
-
+      this.course$ = this.coursesService.loadAllCourses();
       this.beginnerCourses$ = this.course$.pipe(map(courses => {
         return courses.filter(course => course.categories.includes('BEGINNER'))
       }));
