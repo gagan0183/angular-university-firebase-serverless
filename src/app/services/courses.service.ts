@@ -11,7 +11,7 @@ export class CoursesService {
   constructor(private db: AngularFirestore) {}
 
   loadAllCourses(): Observable<Course[]> {
-    return this.db.collection('courses', ref => ref.where('seqNo', '==', '5').where('lessonsCount', '>=', '5')).snapshotChanges().pipe(map(snaps => {
+    return this.db.collection('courses').snapshotChanges().pipe(map(snaps => {
         return snaps.map(snap => {
           return<Course> {
             id: snap.payload.doc.id,
