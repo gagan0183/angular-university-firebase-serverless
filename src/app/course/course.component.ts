@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Lesson} from '../model/lesson';
 import {CoursesService} from '../services/courses.service';
+import {finalize} from 'rxjs/operators';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class CourseComponent implements OnInit {
 
   loadMorePage: number = 0;
 
+  loading = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -30,14 +33,19 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.course = this.route.snapshot.data['course'];
-    this.coursesService.findLessons(this.course.id).subscribe(lessons => {
+    this.loading = true;
+    this.coursesService.findLessons(this.course.id)
+    .pipe(finalize(() => this.loading = false)).subscribe(lessons => {
       this.lessons = lessons;
     });
   }
 
   loadMore() {
     this.loadMorePage++;
-    this.coursesService.findLessons(this.course.id, 'asc', this.loadMorePage).subscribe(lessons => {
+    this.loading 
+    this.coursesService.findLessons(this.course.id, 'asc', this.loadMorePage)
+    .pipe(finalize(() => this.loading = false))
+    .subscribe(lessons => {
       this.lessons = this.lessons.concat(lessons);
     });
   }
