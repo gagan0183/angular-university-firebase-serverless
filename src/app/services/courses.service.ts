@@ -5,6 +5,7 @@ import { Course } from '../model/course';
 import {Observable} from 'rxjs';
 import { convertSnaps } from './utility'; 
 import { OrderByDirection } from 'firestore';
+import { Lesson } from '../model/lesson';
 
 @Injectable({
   providedIn: 'root'

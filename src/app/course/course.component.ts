@@ -18,7 +18,9 @@ export class CourseComponent implements OnInit {
 
   displayedColumns = ['seqNo', 'description', 'duration'];
 
-  lessons: Lesson[];
+  lessons;
+
+  loadMorePage: number = 0;
 
 
   constructor(
@@ -28,10 +30,15 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.course = this.route.snapshot.data['course'];
-    this.lessons = this.coursesService.findLessons(this.course.id);
+    this.coursesService.findLessons(this.course.id).subscribe(lessons => {
+      this.lessons = lessons;
+    });
   }
 
   loadMore() {
-
+    this.loadMorePage++;
+    this.coursesService.findLessons(this.course.id, 'asc', this.loadMorePage).subscribe(lessons => {
+      this.lessons = this.lessons.concat(lessons);
+    });
   }
 }
