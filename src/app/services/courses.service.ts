@@ -31,4 +31,8 @@ export class CoursesService {
     return this.db.collection(`courses/${courseId}/lessons`, ref => ref.orderBy('seqNo', sortOrder).limit(pageSize)
               .startAfter(pageSize * pageNumber)).snapshotChanges().pipe(map(snaps => convertSnaps(snaps)));
   }
+
+  saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
+
+  }
 }
