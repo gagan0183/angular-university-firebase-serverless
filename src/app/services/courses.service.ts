@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import { convertSnaps } from './utility'; 
 import { OrderByDirection } from 'firestore';
 import { Lesson } from '../model/lesson';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,6 @@ export class CoursesService {
   }
 
   saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
-
+    return from(this.db.doc(`courses/${courseId}`).update(changes));
   }
 }
